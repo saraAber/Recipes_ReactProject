@@ -1,0 +1,104 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url('/קופצות.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  background-color: black; /* צבע רקע סביב התמונה */
+}
+
+
+
+
+.home-container {
+  text-align: center;
+  padding: 2rem;
+}
+
+.button-group button {
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 1.1rem;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: #000;
+  color: #DC143C;
+  padding: 30px;
+  border: 2px solid white;
+  border-radius: 15px;
+  width: 300px;
+}
+
+.modal input {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 8px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  padding: 28px;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+}
+
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding-right: 40px;
+  box-sizing: border-box;
+}
+
+.toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.handleLogin{
+ width: 15px;
+}
+
+h2{
+  padding: 20px;
+}
+
+.handleSignup{
+  width: 15px;
+  padding: ;
+}

@@ -1,0 +1,38 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-image: url('https://greissdesign.com/wp-content/uploads/2015/06/vegetables-on-wood.jpg');
+  background-size: cover;
+  background-position: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  direction: rtl;
+}
+
+.overlay {
+  background-color: rgba(0, 0, 0, 0.6);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.button-container button {
+  padding: 15px 30px;
+  font-size: 18px;
+  color: #fff;
+  background-color: #ff5722;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button-container button:hover {
+  background-color: #e64a19;
+}
