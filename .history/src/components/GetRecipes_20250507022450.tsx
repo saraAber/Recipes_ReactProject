@@ -42,7 +42,7 @@ const GetRecipes = () => {
   };
 
   const handleEdit = (id: number, ownerId: number) => {
-    if (myUser?.Id !== ownerId) return alert("אינך מורשה לערוך את המתכון כי לא אתה הכנסת אותו");
+    if (MyUser?.Id !== ownerId) return alert("אינך מורשה לערוך את המתכון כי לא אתה הכנסת אותו");
     navigate(`/edit-recipe/${id}`);
   };
 

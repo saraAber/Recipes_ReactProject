@@ -1,10 +1,11 @@
 import { useContext, useEffect, useMemo, useState } from 'react';
 import axios from 'axios';
 import {
-  CircularProgress, Card, CardContent, Typography, Grid, Button, TextField, MenuItem, Box, Stack
+  CircularProgress, Card, CardContent, Typography, Grid,
+  Button, TextField, MenuItem, Box
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { UserContext } from './userContext'; 
+import { UserContext } from './userContext';
 import { Recipe } from './Types';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -14,7 +15,12 @@ const GetRecipes = () => {
   const { myUser } = useContext(UserContext);
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState(false);
-  const [filters, setFilters] = useState({ category: '', duration: '' as number | '', difficulty: '', userId: '' as number | '' });
+  const [filters, setFilters] = useState({
+    category: '',
+    duration: '' as number | '',
+    difficulty: '',
+    userId: '' as number | ''
+  });
   const navigate = useNavigate();
 
   useEffect(() => { fetchRecipes(); }, []);
@@ -60,13 +66,13 @@ const GetRecipes = () => {
   }, [recipes, filters]);
 
   return (
-    <Box dir="rtl" sx={{ px: 4, pt: 2, pb: 6, backgroundColor: '#f7f9fb', minHeight: '100vh' }}>
+    <Box dir="rtl" sx={{ p: 3, backgroundColor: '#f7f9fb', minHeight: '100vh' }}>
       {loading ? (
-        <CircularProgress />
+        <Box display="flex" justifyContent="center" mt={5}><CircularProgress /></Box>
       ) : (
         <>
-          <Grid container spacing={2} sx={{ mb: 3 }}>
-            <Grid item xs={12} sm={3}>
+          <Grid container spacing={2} mb={3}>
+            <Grid item xs={12} sm={4} md={3}>
               <TextField
                 type="number"
                 label="⏱ זמן הכנה (בדקות)"
@@ -75,7 +81,7 @@ const GetRecipes = () => {
                 fullWidth
               />
             </Grid>
-            <Grid item xs={12} sm={3}>
+            <Grid item xs={12} sm={4} md={3}>
               <TextField
                 select
                 label="💪 רמת קושי"
@@ -89,10 +95,10 @@ const GetRecipes = () => {
                 <MenuItem value="קשה">קשה</MenuItem>
               </TextField>
             </Grid>
-            <Grid item xs={12} sm={3}>
+            <Grid item xs={12} sm={4} md={3}>
               <TextField
                 type="number"
-                label="נוצר ע״י"
+                label="👤 נוצר ע״י (ID)"
                 value={filters.userId}
                 onChange={e => updateFilter('userId', e.target.value ? Number(e.target.value) : '')}
                 fullWidth
@@ -100,7 +106,7 @@ const GetRecipes = () => {
             </Grid>
           </Grid>
 
-          <Grid container spacing={3} alignItems="stretch">
+          <Grid container spacing={3}>
             {filteredRecipes.length ? (
               filteredRecipes.map(recipe => (
                 <Grid item xs={12} sm={6} md={4} key={recipe.Id}>
@@ -109,55 +115,56 @@ const GetRecipes = () => {
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
-                    borderRadius: '20px',
+                    borderRadius: 2,
                     boxShadow: 3,
-                    backgroundColor: '#fff',
-                    p: 2
+                    backgroundColor: '#fff'
                   }}>
                     <CardContent>
-                      <Stack direction="row" justifyContent="flex-end" spacing={1} sx={{ mb: 2 }}>
-                        <Button onClick={() => handleDelete(recipe.Id, recipe.UserId)} sx={{ color: '#e53935' }}><DeleteIcon /></Button>
-                        <Button onClick={() => handleEdit(recipe.Id, recipe.UserId)} sx={{ color: '#00838f' }}><EditIcon /></Button>
-                        <Button onClick={() => console.log("Liked recipe")} sx={{ color: '#fbc02d' }}><ThumbUpIcon /></Button>
-                      </Stack>
-
-                      <Typography variant="h5" fontWeight={700} color="#2e7d32" gutterBottom>{recipe.Name}</Typography>
-                      <Typography variant="body2" color="text.secondary" gutterBottom>{recipe.Description}</Typography>
-                      <Typography variant="body2">רמת קושי: {recipe.Difficulty}</Typography>
-                      <Typography variant="body2">⏲ זמן הכנה: {recipe.Duration} דקות</Typography>
-                      <Typography variant="body2" gutterBottom>קטגוריה: {recipe.CategoryId}</Typography>
-
-                      <Box mt={2} mb={2}>
-                        <img src={recipe.Img} alt={recipe.Name} style={{ width: '100%', borderRadius: '12px' }} />
+                      <Box display="flex" justifyContent="flex-end" gap={1} mb={2}>
+                        <Button onClick={() => handleDelete(recipe.Id, recipe.UserId)} color="error"><DeleteIcon /></Button>
+                        <Button onClick={() => handleEdit(recipe.Id, recipe.UserId)} color="info"><EditIcon /></Button>
+                        <Button onClick={() => console.log("Liked")} color="warning"><ThumbUpIcon /></Button>
                       </Box>
 
-                      <Typography variant="h6" color="primary">🛒 מרכיבים</Typography>
+                      <Typography variant="h6" fontWeight="bold" color="primary">{recipe.Name}</Typography>
+                      <Typography variant="body2" color="text.secondary">{recipe.Description}</Typography>
+                      <Typography variant="body2">רמת קושי: {recipe.Difficulty}</Typography>
+                      <Typography variant="body2">⏲ {recipe.Duration} דקות</Typography>
+                      <Typography variant="body2">קטגוריה: {recipe.CategoryId}</Typography>
+
+                      {recipe.Img && (
+                        <Box mt={2} mb={2}>
+                          <img src={recipe.Img} alt={recipe.Name} style={{ width: '100%', borderRadius: '12px' }} />
+                        </Box>
+                      )}
+
+                      <Typography variant="subtitle1" fontWeight="bold" color="secondary">🛒 מרכיבים</Typography>
                       {recipe.Ingridents?.length ? (
                         recipe.Ingridents.map(ing => (
-                          <Typography key={`${recipe.Id}-${ing.Name}`} variant="body2">
+                          <Typography key={ing.Name} variant="body2">
                             {ing.Name} - {ing.Count} {ing.Type}
                           </Typography>
                         ))
                       ) : (
-                        <Typography variant="body2" color="text.secondary">אין מרכיבים זמינים</Typography>
+                        <Typography variant="body2" color="text.secondary">אין מרכיבים</Typography>
                       )}
 
-                      <Typography variant="h6" color="primary" mt={2}>📋 הוראות הכנה</Typography>
+                      <Typography variant="subtitle1" fontWeight="bold" color="secondary" mt={2}>📋 הוראות</Typography>
                       {recipe.Instructions?.length ? (
-                        recipe.Instructions.map((step, idx) => (
-                          <Typography key={idx} variant="body2">{step.Name}</Typography>
+                        recipe.Instructions.map((step, i) => (
+                          <Typography key={i} variant="body2">{step.Name}</Typography>
                         ))
                       ) : (
-                        <Typography variant="body2" color="text.secondary">אין הוראות הכנה זמינות</Typography>
+                        <Typography variant="body2" color="text.secondary">אין הוראות</Typography>
                       )}
                     </CardContent>
                   </Card>
                 </Grid>
               ))
             ) : (
-              <Typography variant="body1" textAlign="center" color="text.secondary">
-                אין מתכונים זמינים.
-              </Typography>
+              <Grid item xs={12}>
+                <Typography align="center" color="text.secondary">אין מתכונים זמינים לבינתים!</Typography>
+              </Grid>
             )}
           </Grid>
         </>

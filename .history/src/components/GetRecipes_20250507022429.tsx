@@ -32,7 +32,7 @@ const GetRecipes = () => {
   };
 
   const handleDelete = async (id: number, ownerId: number) => {
-    if (myUser?.Id !== ownerId) return alert("אינך מורשה למחוק את המתכון כי לא אתה הכנסת אותו");
+    if (MyUser?.Id !== ownerId) return alert("אינך מורשה למחוק את המתכון כי לא אתה הכנסת אותו");
     try {
       await axios.post(`http://localhost:8080/api/recipe/delete/${id}`);
       setRecipes(prev => prev.filter(r => r.Id !== id));
@@ -42,7 +42,7 @@ const GetRecipes = () => {
   };
 
   const handleEdit = (id: number, ownerId: number) => {
-    if (myUser?.Id !== ownerId) return alert("אינך מורשה לערוך את המתכון כי לא אתה הכנסת אותו");
+    if (Myuser?.Id !== ownerId) return alert("אינך מורשה לערוך את המתכון כי לא אתה הכנסת אותו");
     navigate(`/edit-recipe/${id}`);
   };
 
